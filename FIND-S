@@ -1,0 +1,61 @@
+#Make sure you are comfortable with FIND-S algorithm before reading the code
+#If you are not comfortable with FIND-S algorithm you can read from here(Pg-26 of the book): https://www.cs.ubbcluj.ro/~gabis/ml/ml-books/McGrawHill%20-%20Machine%20Learning%20-Tom%20Mitchell.pdf
+
+data=[['Sunny','Warm','Normal','Strong','Warm','Same','Yes'],
+      ['Sunny','Warm','High','Strong','Warm','Same','Yes'],
+      ['Sunny','Warm','Normal','Strong','Warm','Same','No'],
+      ['Sunny','Warm','High','Strong','Cool','Change','Yes']
+     ]
+
+#Sample data set 
+#You may import your own dataset if you wish
+
+h=['phi']*(len(data[0])-1)
+
+#Initializing the hypothesis with value of all the parameters as 'phi' as I don't know how to use the symbol for 'phi' so...
+
+#Function to check if the hypothesis and given data are consistent or not
+def isConsistent(h,d):
+    #h represents hypothesis and d represents data
+    
+    #The length of the hypothesis must be equal to that of the data-1
+    if(len(h)!=len(d)-1):
+        print("Inconsistent data")
+        return False
+    
+    else:
+        #For h to be consistent with d either h[i] should be equal to 'any' or h[i] should be equal to d[i] 
+        for i in range(0,len(h)):
+            if((h[i]!=d[i]) and (h[i]!='any')):
+                return False
+        return True
+                
+
+#Function to make the hypothesis and data consistent
+def makeConsistent(h,d):
+    for i in range(len(h)):
+        if(h[i]=='phi'):
+            h[i]=d[i]
+        elif(h[i]!=d[i]):
+            h[i]='?'
+            #Since hypothesis and data are different so it can take any value, which is represented by '?' 
+               
+    return h
+
+            
+for d in data:
+    #In S-find algorithm we only consider the cases where the output is True/Yes
+    if d[-1]=="Yes":
+        
+        #First we have to check if data is already consistent or not
+        #If its already consistent we don't need to make any changes to the hypothesis
+        if(isConsistent(h,d)):
+            print("Hypothesis:",d)
+            
+        #If the data is not consistent we have to make the hypothesis consistent to the data
+        else:
+            h=makeConsistent(h,d)
+            
+        
+        print("Updated Hypothesis",h)
+
